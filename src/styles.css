@@ -1,0 +1,7 @@
+.dropdown-content {
+    visibility: hidden;
+}
+
+.show {
+    visibility: visible;
+}
