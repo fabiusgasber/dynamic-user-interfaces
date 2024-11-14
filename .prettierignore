@@ -3,3 +3,10 @@ build
 coverage
 dist
 node_modules
+.prettierrc
+eslint.config.mjs
+package-lock.json
+package.json
+webpack.common.js
+webpack.dev.js
+webpack.prod.js
