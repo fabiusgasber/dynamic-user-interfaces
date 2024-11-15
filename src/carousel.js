@@ -1,27 +1,28 @@
 export const createCarousel = (carouselContainer) => {
-  const carouselSlides = [
-    ...(carouselContainer.querySelectorAll(".carousel-slide") || []),
-  ];
+  const carouselSlides = [...(carouselContainer.querySelectorAll(".carousel-slide"))];
   const previousBtn = carouselContainer.querySelector(".previous-btn");
   const nextBtn = carouselContainer.querySelector(".next-btn");
-  const navDots = carouselContainer.querySelector(".navigation-dots") || null;
+  const navDots = carouselContainer.querySelector(".navigation-dots");
 
-  const startCarousel = () => {
-    if (carouselSlides.length <= 0) return;
+  const init = () => {
     toggleVisible(carouselSlides[0], carouselSlides);
+    setInterval(nextSlide, 5000);
+    attachEventListeners();
+    addNavigationDots();
+  };
+
+  const attachEventListeners = () => {
     nextBtn.addEventListener("click", nextSlide);
     previousBtn.addEventListener("click", previousSlide);
-    setInterval(nextSlide, 5000);
     if (navDots) {
-      addNavigationDots();
-      updateDot();
       nextBtn.addEventListener("click", updateDot);
       previousBtn.addEventListener("click", updateDot);
       navDots.addEventListener("click", changeSlide);
     }
-  };
+  }
 
   const toggleVisible = (activeElem, elemArr) => {
+    if(elemArr.length <= 0) return;
     elemArr.forEach((elem) => {
       elem !== activeElem
         ? elem.classList.remove("active")
@@ -54,12 +55,14 @@ export const createCarousel = (carouselContainer) => {
   };
 
   const addNavigationDots = () => {
-    carouselSlides.forEach((slide, index) => {
+    if (!navDots) return;
+    carouselSlides.forEach((_, index) => {
       const navigationDot = document.createElement("div");
       navigationDot.setAttribute("class", "navigation-dot");
       navigationDot.setAttribute("id", index);
       navDots.append(navigationDot);
     });
+    updateDot();
   };
 
   const updateDot = () => {
@@ -81,5 +84,5 @@ export const createCarousel = (carouselContainer) => {
     }
   };
 
-  startCarousel();
+  init();
 };
