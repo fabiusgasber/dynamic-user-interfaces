@@ -4,11 +4,14 @@ export const createCarousel = (carouselContainer) => {
   const nextBtn = carouselContainer.querySelector(".next-btn");
   const navDots = carouselContainer.querySelector(".navigation-dots");
 
+  const navigationDot = createNavigationDots(carouselContainer);
+
   const init = () => {
     toggleVisible(carouselSlides[0], carouselSlides);
     setInterval(nextSlide, 5000);
     attachEventListeners();
-    addNavigationDots();
+    navigationDot.populateDots(carouselSlides);
+    updateDot();
   };
 
   const attachEventListeners = () => {
@@ -54,23 +57,9 @@ export const createCarousel = (carouselContainer) => {
     updateDot();
   };
 
-  const addNavigationDots = () => {
-    if (!navDots) return;
-    carouselSlides.forEach((_, index) => {
-      const navigationDot = document.createElement("div");
-      navigationDot.setAttribute("class", "navigation-dot");
-      navigationDot.setAttribute("id", index);
-      navDots.append(navigationDot);
-    });
-    updateDot();
-  };
-
   const updateDot = () => {
-    const dots = [
-      ...(carouselContainer.querySelectorAll(".navigation-dot") || []),
-    ];
-    const activeDot = dots[currentSlideIndex()];
-    toggleVisible(activeDot, dots);
+    const activeDot = navigationDot.getDot(currentSlideIndex());
+    toggleVisible(activeDot, navigationDot.getDotsArr());
   };
 
   const changeSlide = (e) => {
@@ -86,3 +75,26 @@ export const createCarousel = (carouselContainer) => {
 
   init();
 };
+
+const createNavigationDots = (carouselContainer) => {
+
+  const navDots = carouselContainer.querySelector(".navigation-dots");
+  const dots =  [];
+    
+  const getDot = (index) => dots[index] ? dots[index] : null;
+  const getDotsArr = () => dots;
+
+  const populateDots = (carouselSlides) => {
+    if (!navDots) return;
+    carouselSlides.forEach((_, index) => {
+      const navigationDot = document.createElement("div");
+      navigationDot.setAttribute("class", "navigation-dot");
+      navigationDot.setAttribute("id", index);
+      navDots.append(navigationDot);
+      dots.push(navigationDot);
+    });
+  };
+
+  return { getDot, getDotsArr, populateDots };
+  
+}
