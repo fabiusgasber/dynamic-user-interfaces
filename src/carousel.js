@@ -8,7 +8,7 @@ export const createCarousel = (carouselContainer) => {
 
   const startCarousel = () => {
     if (carouselSlides.length <= 0) return;
-    toggleVisible(carouselSlides[0]);
+    toggleVisible(carouselSlides[0], carouselSlides);
     nextBtn.addEventListener("click", nextSlide);
     previousBtn.addEventListener("click", previousSlide);
     if (navDots) {
@@ -20,19 +20,11 @@ export const createCarousel = (carouselContainer) => {
     }
   };
 
-  const toggleVisible = (slide) => {
-    carouselSlides.forEach((slideElem) => {
-      slideElem !== slide
-        ? slideElem.classList.remove("active")
-        : slide.classList.add("active");
-    });
-  };
-
-  const toggleDotVisible = (activeDot, dots) => {
-    dots.forEach((dot) => {
-      dot !== activeDot
-        ? dot.classList.remove("active")
-        : dot.classList.add("active");
+  const toggleVisible = (activeElem, elemArr) => {
+    elemArr.forEach((elem) => {
+      elem !== activeElem
+        ? elem.classList.remove("active")
+        : elem.classList.add("active");
     });
   };
 
@@ -44,15 +36,15 @@ export const createCarousel = (carouselContainer) => {
   const nextSlide = () => {
     const currentIndex = currentSlideIndex();
     carouselSlides[currentIndex + 1]
-      ? toggleVisible(carouselSlides[currentIndex + 1])
-      : toggleVisible(carouselSlides[0]);
+      ? toggleVisible(carouselSlides[currentIndex + 1], carouselSlides)
+      : toggleVisible(carouselSlides[0], carouselSlides);
   };
 
   const previousSlide = () => {
     const currentIndex = currentSlideIndex();
     carouselSlides[currentIndex - 1]
-      ? toggleVisible(carouselSlides[currentIndex - 1])
-      : toggleVisible(carouselSlides[carouselSlides.length - 1]);
+      ? toggleVisible(carouselSlides[currentIndex - 1], carouselSlides)
+      : toggleVisible(carouselSlides[carouselSlides.length - 1], carouselSlides);
   };
 
   const addNavigationDots = () => {
@@ -69,7 +61,7 @@ export const createCarousel = (carouselContainer) => {
       ...(carouselContainer.querySelectorAll(".navigation-dot") || []),
     ];
     const activeDot = dots[currentSlideIndex()];
-    toggleDotVisible(activeDot, dots);
+    toggleVisible(activeDot, dots);
   };
 
   const changeSlide = (e) => {
@@ -77,7 +69,7 @@ export const createCarousel = (carouselContainer) => {
       const index = e.target.getAttribute("id");
       const slide = carouselSlides[index];
       if (slide) {
-        toggleVisible(carouselSlides[index]);
+        toggleVisible(carouselSlides[index], carouselSlides);
         updateDot();
       }
     }
