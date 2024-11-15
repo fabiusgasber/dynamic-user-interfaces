@@ -4,10 +4,12 @@ export const createCarousel = (carouselContainer) => {
   ];
   const previousBtn = carouselContainer.querySelector(".previous-btn");
   const nextBtn = carouselContainer.querySelector(".next-btn");
+  const navDots = carouselContainer.querySelector(".navigation-dots");
 
   const startCarousel = () => {
     if (carouselSlides.length <= 0) return;
     toggleVisible(carouselSlides[0]);
+    addNavigationDots();
     nextBtn.addEventListener("click", nextSlide);
     previousBtn.addEventListener("click", previousSlide);
   };
@@ -38,6 +40,15 @@ export const createCarousel = (carouselContainer) => {
       ? toggleVisible(carouselSlides[currentIndex - 1])
       : toggleVisible(carouselSlides[carouselSlides.length - 1]);
   };
+
+  const addNavigationDots = () => {
+    carouselSlides.forEach((slide, index) => {
+      const navigationDot = document.createElement("div");
+      navigationDot.setAttribute("class", "navigation-dot");
+      navigationDot.setAttribute("id", index);
+      navDots.append(navigationDot);
+    });
+  }
 
   startCarousel();
 };
