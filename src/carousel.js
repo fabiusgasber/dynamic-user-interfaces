@@ -11,6 +11,7 @@ export const createCarousel = (carouselContainer) => {
     toggleVisible(carouselSlides[0], carouselSlides);
     nextBtn.addEventListener("click", nextSlide);
     previousBtn.addEventListener("click", previousSlide);
+    setInterval(nextSlide, 5000);
     if (navDots) {
       addNavigationDots();
       updateDot();
@@ -38,13 +39,18 @@ export const createCarousel = (carouselContainer) => {
     carouselSlides[currentIndex + 1]
       ? toggleVisible(carouselSlides[currentIndex + 1], carouselSlides)
       : toggleVisible(carouselSlides[0], carouselSlides);
+    updateDot();
   };
 
   const previousSlide = () => {
     const currentIndex = currentSlideIndex();
     carouselSlides[currentIndex - 1]
       ? toggleVisible(carouselSlides[currentIndex - 1], carouselSlides)
-      : toggleVisible(carouselSlides[carouselSlides.length - 1], carouselSlides);
+      : toggleVisible(
+          carouselSlides[carouselSlides.length - 1],
+          carouselSlides,
+        );
+    updateDot();
   };
 
   const addNavigationDots = () => {
