@@ -16,6 +16,7 @@ export const createCarousel = (carouselContainer) => {
   const attachEventListeners = () => {
     nextBtn.addEventListener("click", nextSlide);
     previousBtn.addEventListener("click", previousSlide);
+    navigationDot.attachEventListeners(carouselSlides);
   };
 
   const nextSlide = () => {
@@ -64,7 +65,21 @@ const createNavigationDots = (carouselContainer) => {
     domLoader.toggleVisible(0, dots);
   };
 
-  return { getDot, getDotsArr, populateDots };
+  const attachEventListeners = (carouselSlides) => {
+    if (navDots) {
+      navDots.addEventListener("click", (e) => updateDot(e, carouselSlides));
+    }
+  };
+
+  const updateDot = (e, carouselSlides) => {
+    if(e.target.classList.contains("navigation-dot")){
+    const index = e.target.getAttribute("id");
+    domLoader.toggleVisible(index, carouselSlides);
+    domLoader.toggleVisible(index, getDotsArr());
+    }
+  }
+
+  return { getDot, getDotsArr, populateDots, attachEventListeners };
 };
 
 const domLoader = (() => {
