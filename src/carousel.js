@@ -2,12 +2,14 @@ export const createCarousel = (carouselContainer) => {
   const carouselSlides = [
     ...carouselContainer.querySelectorAll(".carousel-slide"),
   ];
-  const navigationDot = createNavigationDots(carouselContainer);
+  const dotContainer = carouselContainer.querySelector(".navigation-dots");
+  const navigationDot = createNavigationDots();
 
   const init = () => {
     domLoader.toggleVisible(0, carouselSlides);
     attachEventListeners();
     navigationDot.populateDots(carouselSlides);
+    domLoader.appendArray(navigationDot.getDotsArr(), dotContainer);
     domLoader.toggleVisible(0, navigationDot.getDotsArr());
   };
 
@@ -46,17 +48,15 @@ export const createCarousel = (carouselContainer) => {
   init();
 };
 
-const createNavigationDots = (carouselContainer) => {
-  const navDots = carouselContainer.querySelector(".navigation-dots");
+const createNavigationDots = () => {
   const dots = [];
 
   const getDotsArr = () => dots;
 
-  const populateDots = (carouselSlides) => {
-    if (!navDots || !carouselSlides) return;
-    carouselSlides.forEach((_, index) => {
+  const populateDots = (array) => {
+    if (!array) return;
+    array.forEach((_, index) => {
       const navigationDot = createDot(index);
-      navDots.append(navigationDot);
       dots.push(navigationDot);
     });
   };
@@ -77,10 +77,18 @@ const domLoader = (() => {
     elemArr[activeElemIndex].classList.add("active");
   };
 
+  const append = (child, parent) => parent.append(child);
+
+  const appendArray = (array, parent) => {
+    if(Array.isArray(array) && parent instanceof HTMLElement){
+      array.forEach(elem => append(elem, parent));
+    }
+  }
+
   const getCurrent = (arr) =>
     arr.find((elem) => elem.classList.contains("active"));
 
   const getCurrentIndex = (arr) => arr.indexOf(getCurrent(arr));
 
-  return { toggleVisible, getCurrentIndex };
+  return { toggleVisible, getCurrentIndex, appendArray };
 })();
