@@ -18,7 +18,7 @@ export const createCarousel = (carouselContainer) => {
   const nextSlide = (e) => {
     const direction = parseInt(e.target.getAttribute("id"));
     const currentIndex = domLoader.getCurrentIndex(carouselSlides);
-    if(direction == 1){
+    if (direction === 1) {
       if (carouselSlides[currentIndex + 1]) {
         domLoader.toggleVisible(currentIndex + 1, carouselSlides);
         domLoader.toggleVisible(currentIndex + 1, navigationDot.getDotsArr());
@@ -26,8 +26,7 @@ export const createCarousel = (carouselContainer) => {
         domLoader.toggleVisible(0, carouselSlides);
         domLoader.toggleVisible(0, navigationDot.getDotsArr());
       }
-    }
-    else if(direction == -1){
+    } else if (direction === -1) {
       if (carouselSlides[currentIndex - 1]) {
         domLoader.toggleVisible(currentIndex - 1, carouselSlides);
         domLoader.toggleVisible(currentIndex - 1, navigationDot.getDotsArr());
@@ -37,12 +36,11 @@ export const createCarousel = (carouselContainer) => {
           carouselSlides.length - 1,
           navigationDot.getDotsArr(),
         );
-      }  
-    }
-    else if (e.target.classList.contains("navigation-dot")) {
-        domLoader.toggleVisible(direction, carouselSlides);
-        domLoader.toggleVisible(direction, navigationDot.getDotsArr());
       }
+    } else if (e.target.classList.contains("navigation-dot")) {
+      domLoader.toggleVisible(direction, carouselSlides);
+      domLoader.toggleVisible(direction, navigationDot.getDotsArr());
+    }
   };
 
   init();
