@@ -18,7 +18,7 @@ export const createCarousel = (carouselContainer) => {
   };
 
   const nextSlide = (e) => {
-    const direction = parseInt(e.target.getAttribute("id"));
+    const direction = parseInt(e.target.getAttribute("data-index"));
     const currentIndex = domLoader.getCurrentIndex(carouselSlides);
     if (direction === 1) {
       if (carouselSlides[currentIndex + 1]) {
@@ -64,7 +64,7 @@ const createNavigationDots = () => {
   const createDot = (index) => {
     const navigationDot = document.createElement("div");
     navigationDot.setAttribute("class", "navigation-dot");
-    navigationDot.setAttribute("id", index);
+    navigationDot.setAttribute("data-index", index);
     return navigationDot;
   };
 
