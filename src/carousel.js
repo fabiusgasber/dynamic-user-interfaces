@@ -4,6 +4,7 @@ export const createCarousel = (carouselContainer) => {
   ];
   const dotContainer = carouselContainer.querySelector(".navigation-dots");
   const navigationDot = createNavigationDots();
+  const nextBtn = carouselContainer.querySelector(".next-btn");
 
   const init = () => {
     domLoader.toggleVisible(0, carouselSlides);
@@ -11,6 +12,7 @@ export const createCarousel = (carouselContainer) => {
     navigationDot.populateDots(carouselSlides);
     domLoader.appendArray(navigationDot.getDotsArr(), dotContainer);
     domLoader.toggleVisible(0, navigationDot.getDotsArr());
+    setInterval(() => nextBtn.click(), 5000);
   };
 
   const attachEventListeners = () => {
