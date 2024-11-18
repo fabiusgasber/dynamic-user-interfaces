@@ -1,3 +1,7 @@
+:root {
+  --main-padding: 1rem;
+}
+
 .dropdown-content {
   visibility: hidden;
 }
@@ -13,7 +17,8 @@
   grid-template-columns: 1fr 3fr 1fr;
   grid-template-rows: 1fr;
   position: relative;
-  background-color: black;
+  grid-auto-flow: column;
+  padding: var(--main-padding)
 }
 
 .carousel-slideshow {
@@ -33,11 +38,11 @@
   border-radius: 50%;
   width: 10px;
   height: 10px;
-  border: 1px solid blue;
+  border: 1px solid black;
 }
 
 .navigation-dot.active {
-  background-color: blue;
+  background-color: black;
 }
 
 .carousel-slide {
@@ -62,5 +67,5 @@
 }
 
 .carousel-container .next-btn {
-  right: 0;
+  right: var(--main-padding);
 }
